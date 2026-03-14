@@ -1,0 +1,421 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+#wrap{padding:16px;max-width:520px;margin:0 auto;font-family:var(--font-sans)}
+.screen{display:none}
+.screen.active{display:block}
+
+.logo{font-size:26px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;letter-spacing:-0.5px}
+.tagline{font-size:13px;color:var(--color-text-secondary);margin-bottom:20px}
+
+.mode-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.mode-card{border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:14px;cursor:pointer;background:var(--color-background-primary);transition:border-color 0.15s,background 0.15s;text-align:left}
+.mode-card:hover{background:var(--color-background-secondary);border-color:var(--color-border-primary)}
+.mode-card.solo{grid-column:1/-1}
+.mode-icon{width:32px;height:32px;border-radius:8px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.mode-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.mode-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.4}
+
+.diff-row{display:flex;gap:8px;margin-bottom:16px}
+.diff-btn{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px;background:var(--color-background-primary);cursor:pointer;font-size:13px;font-weight:500;color:var(--color-text-secondary);transition:all 0.15s}
+.diff-btn.active{border-color:#185FA5;background:#E6F1FB;color:#0C447C}
+
+.player-setup{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px;margin-bottom:14px;background:var(--color-background-secondary)}
+.player-setup label{font-size:12px;color:var(--color-text-secondary);display:block;margin-bottom:4px}
+.player-setup input{width:100%;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 10px;font-size:14px;background:var(--color-background-primary);color:var(--color-text-primary);outline:none}
+.player-setup input:focus{border-color:#185FA5}
+
+.start-btn{width:100%;background:#185FA5;color:#fff;border:none;border-radius:var(--border-radius-md);padding:12px;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:8px;transition:background 0.15s}
+.start-btn:hover{background:#0C447C}
+
+.back-btn{background:none;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px 14px;font-size:13px;color:var(--color-text-secondary);cursor:pointer;margin-bottom:14px;transition:background 0.15s}
+.back-btn:hover{background:var(--color-background-secondary)}
+
+.game-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.player-tabs{display:flex;gap:6px}
+.ptab{padding:6px 12px;border-radius:var(--border-radius-md);font-size:12px;font-weight:500;border:0.5px solid var(--color-border-secondary);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s}
+.ptab.active{background:#E6F1FB;border-color:#185FA5;color:#0C447C}
+.ptab.done{background:#EAF3DE;border-color:#3B6D11;color:#3B6D11}
+
+.timer-score{display:flex;gap:10px;align-items:center}
+.ts-block{text-align:center}
+.ts-val{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.ts-lbl{font-size:11px;color:var(--color-text-secondary)}
+
+.sudoku-wrap{border:2.5px solid var(--color-text-primary);border-radius:6px;overflow:hidden;margin-bottom:12px;display:inline-block;width:100%}
+.sudoku-table{border-collapse:collapse;width:100%;table-layout:fixed}
+.sudoku-table td{border:0.5px solid #aaa;padding:0;text-align:center;vertical-align:middle;cursor:pointer;background:var(--color-background-primary);transition:background 0.1s;position:relative}
+.sudoku-table td:nth-child(3n){border-right:2px solid var(--color-text-primary)}
+.sudoku-table tr:nth-child(3n) td{border-bottom:2px solid var(--color-text-primary)}
+.sudoku-table td.given{background:#F1EFE8;cursor:default;pointer-events:none}
+.sudoku-table td.selected{background:#B5D4F4}
+.sudoku-table td.related{background:#E6F1FB}
+.sudoku-table td.p2-fill{background:#EEEDFE}
+.sudoku-table td.p2-selected{background:#AFA9EC}
+.sudoku-table td.error{background:#FCEBEB}
+.sudoku-table td.correct{background:#EAF3DE}
+.cell-num{font-size:clamp(14px,3.5vw,20px);font-weight:500;line-height:1;display:block;color:var(--color-text-primary)}
+.cell-num.given-num{color:#2C2C2A;font-weight:700}
+.cell-num.player-num{color:#185FA5}
+.cell-num.p2-num{color:#534AB7}
+.cell-num.err-num{color:#A32D2D}
+
+.numpad-row{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;margin-bottom:10px}
+.npad-btn{border:0.5px solid var(--color-border-secondary);border-radius:6px;padding:9px 0;font-size:16px;font-weight:500;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary);transition:all 0.1s}
+.npad-btn:hover{background:#E6F1FB;border-color:#185FA5;color:#0C447C}
+.npad-btn:active{transform:scale(0.93)}
+
+.action-row{display:flex;gap:6px;margin-bottom:12px}
+.act-btn{flex:1;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);padding:8px;font-size:12px;font-weight:500;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-primary);transition:background 0.15s}
+.act-btn:hover{background:var(--color-background-secondary)}
+.act-btn.danger{color:#A32D2D;border-color:#F09595}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.scard{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px;text-align:center}
+.scard .sv{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.scard .sl{font-size:11px;color:var(--color-text-secondary);margin-top:1px}
+
+.progress-wrap{margin-bottom:12px}
+.prog-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:4px;display:flex;justify-content:space-between}
+.prog-bar{height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}
+.prog-fill{height:100%;background:#185FA5;border-radius:3px;transition:width 0.3s}
+.prog-fill.p2{background:#534AB7}
+
+.result-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:16px;text-align:center;margin-bottom:12px;background:var(--color-background-secondary)}
+.result-crown{font-size:32px;margin-bottom:8px}
+.result-title{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.result-sub{font-size:13px;color:var(--color-text-secondary);margin-bottom:12px}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.rp{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px;background:var(--color-background-primary)}
+.rp.winner{border-color:#185FA5;background:#E6F1FB}
+.rp-name{font-size:12px;color:var(--color-text-secondary);margin-bottom:2px}
+.rp-score{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.rp-detail{font-size:11px;color:var(--color-text-secondary)}
+
+.notice{font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:8px 10px;margin-bottom:10px;border-left:3px solid #185FA5}
+</style>
+
+<div id="wrap">
+
+<div id="screen-home" class="screen active">
+  <div class="logo">Sudoku</div>
+  <div class="tagline">Pick a mode to start</div>
+  <div class="mode-grid">
+    <div class="mode-card solo" onclick="goMode('solo')">
+      <div class="mode-icon" style="background:#E6F1FB">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="5" r="3" stroke="#185FA5" stroke-width="1.5"/><path d="M2 14c0-3.314 2.686-5 6-5s6 1.686 6 5" stroke="#185FA5" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="mode-title">Solo play</div>
+      <div class="mode-desc">Classic Sudoku at your own pace. Choose difficulty and use hints freely.</div>
+    </div>
+    <div class="mode-card" onclick="goMode('vs')">
+      <div class="mode-icon" style="background:#EEEDFE">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="5" cy="5" r="2.5" stroke="#534AB7" stroke-width="1.5"/><circle cx="11" cy="5" r="2.5" stroke="#534AB7" stroke-width="1.5"/><path d="M1 14c0-2.5 1.8-4 4-4" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/><path d="M15 14c0-2.5-1.8-4-4-4" stroke="#534AB7" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="mode-title">1v1 versus</div>
+      <div class="mode-desc">Two players, same puzzle. Race to finish first with fewer errors.</div>
+    </div>
+    <div class="mode-card" onclick="goMode('coop')">
+      <div class="mode-icon" style="background:#EAF3DE">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v12M2 8h12" stroke="#3B6D11" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <div class="mode-title">Co-op</div>
+      <div class="mode-desc">Work together on one board. Both players fill cells collaboratively.</div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-setup" class="screen">
+  <button class="back-btn" onclick="goHome()">Back</button>
+  <div style="font-size:16px;font-weight:500;color:var(--color-text-primary);margin-bottom:12px" id="setup-title">Setup</div>
+  <div style="font-size:12px;color:var(--color-text-secondary);margin-bottom:6px">Difficulty</div>
+  <div class="diff-row">
+    <button class="diff-btn active" id="d-easy" onclick="setDiff('easy')">Easy</button>
+    <button class="diff-btn" id="d-medium" onclick="setDiff('medium')">Medium</button>
+    <button class="diff-btn" id="d-hard" onclick="setDiff('hard')">Hard</button>
+  </div>
+  <div id="player-fields"></div>
+  <button class="start-btn" onclick="startGame()">Start game</button>
+</div>
+
+<div id="screen-game" class="screen">
+  <div class="game-header">
+    <div class="player-tabs" id="player-tabs"></div>
+    <div class="timer-score">
+      <div class="ts-block"><div class="ts-val" id="timer-disp">0:00</div><div class="ts-lbl">time</div></div>
+    </div>
+  </div>
+  <div id="notice-area"></div>
+  <div class="sudoku-wrap">
+    <table class="sudoku-table" id="sudoku-table"></table>
+  </div>
+  <div class="progress-wrap" id="prog-wrap"></div>
+  <div class="numpad-row" id="numpad"></div>
+  <div class="action-row">
+    <button class="act-btn" onclick="doErase()">Erase</button>
+    <button class="act-btn" onclick="doHint()">Hint (<span id="hint-count">3</span>)</button>
+    <button class="act-btn" onclick="switchPlayer()" id="switch-btn" style="display:none">Switch turn</button>
+    <button class="act-btn danger" onclick="goHome()">Quit</button>
+  </div>
+  <div class="stats-row">
+    <div class="scard"><div class="sv" id="stat-moves">0</div><div class="sl">moves</div></div>
+    <div class="scard"><div class="sv" id="stat-errors">0</div><div class="sl">errors</div></div>
+    <div class="scard"><div class="sv" id="stat-filled">0</div><div class="sl">filled</div></div>
+  </div>
+</div>
+
+<div id="screen-result" class="screen">
+  <div class="result-card" id="result-card"></div>
+  <button class="start-btn" onclick="goHome()">Play again</button>
+</div>
+
+</div>
+
+<script>
+const PUZZLES={
+easy:{
+  board:[[5,3,0,0,7,0,0,0,0],[6,0,0,1,9,5,0,0,0],[0,9,8,0,0,0,0,6,0],[8,0,0,0,6,0,0,0,3],[4,0,0,8,0,3,0,0,1],[7,0,0,0,2,0,0,0,6],[0,6,0,0,0,0,2,8,0],[0,0,0,4,1,9,0,0,5],[0,0,0,0,8,0,0,7,9]],
+  sol:[[5,3,4,6,7,8,9,1,2],[6,7,2,1,9,5,3,4,8],[1,9,8,3,4,2,5,6,7],[8,5,9,7,6,1,4,2,3],[4,2,6,8,5,3,7,9,1],[7,1,3,9,2,4,8,5,6],[9,6,1,5,3,7,2,8,4],[2,8,7,4,1,9,6,3,5],[3,4,5,2,8,6,1,7,9]]
+},
+medium:{
+  board:[[0,0,0,2,6,0,7,0,1],[6,8,0,0,7,0,0,9,0],[1,9,0,0,0,4,5,0,0],[8,2,0,1,0,0,0,4,0],[0,0,4,6,0,2,9,0,0],[0,5,0,0,0,3,0,2,8],[0,0,9,3,0,0,0,7,4],[0,4,0,0,5,0,0,3,6],[7,0,3,0,1,8,0,0,0]],
+  sol:[[4,3,5,2,6,9,7,8,1],[6,8,2,5,7,1,4,9,3],[1,9,7,8,3,4,5,6,2],[8,2,6,1,9,5,3,4,7],[3,7,4,6,8,2,9,1,5],[9,5,1,7,4,3,6,2,8],[5,1,9,3,2,6,8,7,4],[2,4,8,9,5,7,1,3,6],[7,6,3,4,1,8,2,5,9]]
+},
+hard:{
+  board:[[0,0,0,0,0,0,0,0,0],[0,0,0,0,0,3,0,8,5],[0,0,1,0,2,0,0,0,0],[0,0,0,5,0,7,0,0,0],[0,0,4,0,0,0,1,0,0],[0,9,0,0,0,0,0,0,0],[5,0,0,0,0,0,0,7,3],[0,0,2,0,1,0,0,0,0],[0,0,0,0,4,0,0,0,9]],
+  sol:[[9,8,7,6,5,4,3,2,1],[2,4,6,1,7,3,9,8,5],[3,5,1,9,2,8,7,4,6],[1,2,8,5,3,7,6,9,4],[6,3,4,8,9,2,1,5,7],[7,9,5,4,6,1,8,3,2],[5,1,9,2,8,6,4,7,3],[4,7,2,3,1,9,5,6,8],[8,6,3,7,4,5,2,1,9]]
+}
+};
+
+let mode='solo',diff='easy',players=[],curPlayer=0,selected=null;
+let gameBoard=[],solution=[],givenMask=[],playerMoves=[],timerInt=null,elapsed=0,hints=3,totalErrors=0,totalMoves=0;
+
+function goHome(){
+  clearInterval(timerInt);
+  show('screen-home');
+}
+
+function goMode(m){
+  mode=m;
+  const t=document.getElementById('setup-title');
+  t.textContent=m==='solo'?'Solo setup':m==='vs'?'1v1 versus setup':'Co-op setup';
+  const pf=document.getElementById('player-fields');
+  if(m==='solo'){
+    pf.innerHTML=`<div class="player-setup"><label>Your name</label><input id="p1name" value="Player 1" /></div>`;
+  } else {
+    pf.innerHTML=`<div class="player-setup"><label>Player 1</label><input id="p1name" value="Player 1" /></div><div class="player-setup" style="margin-top:8px"><label>Player 2</label><input id="p2name" value="Player 2" /></div>`;
+  }
+  show('screen-setup');
+}
+
+function setDiff(d){
+  diff=d;
+  ['easy','medium','hard'].forEach(x=>{
+    document.getElementById('d-'+x).classList.toggle('active',x===d);
+  });
+}
+
+function startGame(){
+  const p1=document.getElementById('p1name')?.value||'Player 1';
+  const p2=document.getElementById('p2name')?.value||'Player 2';
+  players=mode==='solo'?[{name:p1,score:0,errors:0,moves:0,done:false}]:[{name:p1,score:0,errors:0,moves:0,done:false},{name:p2,score:0,errors:0,moves:0,done:false}];
+  curPlayer=0;
+  selected=null;
+  hints=3;
+  totalErrors=0;totalMoves=0;
+  const puz=PUZZLES[diff];
+  solution=puz.sol.map(r=>[...r]);
+  gameBoard=puz.board.map(r=>[...r]);
+  givenMask=puz.board.map(r=>r.map(v=>v!==0));
+  playerMoves=Array(9).fill(null).map(()=>Array(9).fill(-1));
+  elapsed=0;
+  clearInterval(timerInt);
+  timerInt=setInterval(()=>{elapsed++;document.getElementById('timer-disp').textContent=fmt(elapsed);},1000);
+  renderTabs();
+  renderBoard();
+  renderNumpad();
+  renderProgress();
+  document.getElementById('hint-count').textContent=hints;
+  document.getElementById('stat-moves').textContent=0;
+  document.getElementById('stat-errors').textContent=0;
+  document.getElementById('stat-filled').textContent=0;
+  document.getElementById('switch-btn').style.display=(mode==='vs')?'block':'none';
+  document.getElementById('notice-area').innerHTML=mode!=='solo'?`<div class="notice">Current turn: <strong>${players[curPlayer].name}</strong></div>`:'';
+  show('screen-game');
+}
+
+function fmt(s){return Math.floor(s/60)+':'+(s%60<10?'0':'')+s%60}
+
+function renderTabs(){
+  const el=document.getElementById('player-tabs');
+  el.innerHTML=players.map((p,i)=>`<div class="ptab${i===curPlayer?' active':''}${p.done?' done':''}" onclick="if(${mode==='coop'})switchToPlayer(${i})">${p.name}</div>`).join('');
+}
+
+function switchToPlayer(i){curPlayer=i;selected=null;renderTabs();renderBoard();}
+
+function switchPlayer(){
+  curPlayer=(curPlayer+1)%players.length;
+  selected=null;
+  renderTabs();renderBoard();
+  document.getElementById('notice-area').innerHTML=`<div class="notice">Current turn: <strong>${players[curPlayer].name}</strong></div>`;
+}
+
+function renderBoard(){
+  const tbl=document.getElementById('sudoku-table');
+  tbl.innerHTML='';
+  for(let r=0;r<9;r++){
+    const tr=document.createElement('tr');
+    for(let c=0;c<9;c++){
+      const td=document.createElement('td');
+      const v=gameBoard[r][c];
+      const isGiven=givenMask[r][c];
+      const isSel=selected&&selected[0]===r&&selected[1]===c;
+      const owner=playerMoves[r][c];
+      const isP2=(owner===1);
+      if(isGiven){
+        td.className='given';
+        const s=document.createElement('span');
+        s.className='cell-num given-num';
+        s.textContent=v;
+        td.appendChild(s);
+      } else {
+        let cls='';
+        if(isSel)cls=isP2?'p2-selected':'selected';
+        else if(selected){
+          const[sr,sc]=selected;
+          if(sr===r||sc===c||(Math.floor(sr/3)===Math.floor(r/3)&&Math.floor(sc/3)===Math.floor(c/3)))
+            cls=isP2?'p2-fill':'related';
+        } else if(isP2)cls='p2-fill';
+        td.className=cls;
+        if(v!==0){
+          const s=document.createElement('span');
+          const isErr=v!==solution[r][c];
+          s.className='cell-num '+(isErr?'err-num':isP2?'p2-num':'player-num');
+          s.textContent=v;
+          td.appendChild(s);
+          if(isErr)td.classList.add('error');
+          else td.classList.add('correct');
+        }
+        td.onclick=()=>{selected=[r,c];renderBoard();};
+      }
+      tr.appendChild(td);
+    }
+    tbl.appendChild(tr);
+  }
+}
+
+function renderNumpad(){
+  const np=document.getElementById('numpad');
+  np.innerHTML='';
+  for(let n=1;n<=9;n++){
+    const b=document.createElement('button');
+    b.className='npad-btn';
+    b.textContent=n;
+    b.onclick=()=>placeNum(n);
+    np.appendChild(b);
+  }
+}
+
+function renderProgress(){
+  const pw=document.getElementById('prog-wrap');
+  if(mode==='solo'){
+    const filled=countFilled();
+    const total=81-countGiven();
+    const pct=total>0?Math.round(filled/total*100):0;
+    pw.innerHTML=`<div class="prog-label"><span>Progress</span><span>${pct}%</span></div><div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>`;
+  } else {
+    pw.innerHTML=players.map((p,i)=>{
+      const filled=countFilledByPlayer(i);
+      const total=81-countGiven();
+      const pct=total>0?Math.round(filled/total*100):0;
+      return `<div class="prog-label" style="margin-top:${i?'6px':'0'}"><span>${p.name}</span><span>${pct}%</span></div><div class="prog-bar"><div class="prog-fill${i?' p2':''}" style="width:${pct}%"></div></div>`;
+    }).join('');
+  }
+}
+
+function countGiven(){let c=0;for(let r=0;r<9;r++)for(let cc=0;cc<9;cc++)if(givenMask[r][cc])c++;return c;}
+function countFilled(){let c=0;for(let r=0;r<9;r++)for(let cc=0;cc<9;cc++)if(!givenMask[r][cc]&&gameBoard[r][cc]!==0)c++;return c;}
+function countFilledByPlayer(pi){let c=0;for(let r=0;r<9;r++)for(let cc=0;cc<9;cc++)if(playerMoves[r][cc]===pi&&gameBoard[r][cc]!==0)c++;return c;}
+function countCorrect(){let c=0;for(let r=0;r<9;r++)for(let cc=0;cc<9;cc++)if(!givenMask[r][cc]&&gameBoard[r][cc]===solution[r][cc])c++;return c;}
+
+function placeNum(n){
+  if(!selected)return;
+  const[r,c]=selected;
+  if(givenMask[r][c])return;
+  gameBoard[r][c]=n;
+  playerMoves[r][c]=curPlayer;
+  players[curPlayer].moves++;
+  totalMoves++;
+  if(n!==solution[r][c]){players[curPlayer].errors++;totalErrors++;}
+  else{players[curPlayer].score+=10;}
+  updateStats();
+  renderBoard();
+  renderProgress();
+  if(checkSolved())return;
+  if(mode==='vs')switchPlayer();
+}
+
+function doErase(){
+  if(!selected)return;
+  const[r,c]=selected;
+  if(givenMask[r][c])return;
+  gameBoard[r][c]=0;
+  playerMoves[r][c]=-1;
+  renderBoard();renderProgress();
+}
+
+function doHint(){
+  if(hints<=0)return;
+  let empties=[];
+  for(let r=0;r<9;r++)for(let c=0;c<9;c++)if(!givenMask[r][c]&&gameBoard[r][c]===0)empties.push([r,c]);
+  if(!empties.length)return;
+  const[r,c]=empties[Math.floor(Math.random()*empties.length)];
+  gameBoard[r][c]=solution[r][c];
+  playerMoves[r][c]=curPlayer;
+  players[curPlayer].score+=5;
+  hints--;
+  totalMoves++;
+  document.getElementById('hint-count').textContent=hints;
+  updateStats();
+  renderBoard();renderProgress();
+  checkSolved();
+}
+
+function updateStats(){
+  document.getElementById('stat-moves').textContent=totalMoves;
+  document.getElementById('stat-errors').textContent=totalErrors;
+  document.getElementById('stat-filled').textContent=countFilled();
+}
+
+function checkSolved(){
+  const total=81-countGiven();
+  if(countCorrect()===total){
+    clearInterval(timerInt);
+    showResult();
+    return true;
+  }
+  return false;
+}
+
+function showResult(){
+  const rc=document.getElementById('result-card');
+  if(mode==='solo'){
+    const p=players[0];
+    rc.innerHTML=`<div class="result-crown">&#127942;</div><div class="result-title">Puzzle complete!</div><div class="result-sub">Solved in ${fmt(elapsed)} with ${p.errors} errors</div><div class="result-grid"><div class="rp winner"><div class="rp-name">${p.name}</div><div class="rp-score">${p.score}</div><div class="rp-detail">pts &bull; ${p.moves} moves</div></div><div class="rp"><div class="rp-name">Time</div><div class="rp-score">${fmt(elapsed)}</div><div class="rp-detail">elapsed</div></div></div>`;
+  } else {
+    const winner=players[0].score>=players[1].score?players[0]:players[1];
+    const w=players[0].score>=players[1].score?0:1;
+    rc.innerHTML=`<div class="result-crown">&#127942;</div><div class="result-title">${winner.name} wins!</div><div class="result-sub">Puzzle solved in ${fmt(elapsed)}</div><div class="result-grid">${players.map((p,i)=>`<div class="rp${i===w?' winner':''}"><div class="rp-name">${p.name}</div><div class="rp-score">${p.score}</div><div class="rp-detail">pts &bull; ${p.errors} err</div></div>`).join('')}</div>`;
+  }
+  show('screen-result');
+}
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+goMode('solo');
+setDiff('easy');
+document.getElementById('p1name').value='Player 1';
+</script>
