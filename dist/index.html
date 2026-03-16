@@ -3,51 +3,57 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Funtaztic 9 | API Manifest</title>
+    <title>Funtaztic 9 | Interactive Oracle</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;600&display=swap');
-        body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; overflow-x: hidden; }
         .gold-accent { color: #d4af37; }
-        .ticker { background: #d4af37; color: #000; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding: 4px 0; overflow: hidden; }
-        .ticker-text { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; }
+        .gold-bg { background: #d4af37; }
+        .ticker { background: #d4af37; color: #000; font-weight: 800; text-transform: uppercase; font-size: 10px; padding: 4px 0; }
+        .ticker-text { display: inline-block; white-space: nowrap; animation: ticker 50s linear infinite; }
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
-        .hidden { display: none; }
-        .tab-active { color: #d4af37; border-bottom: 2px solid #d4af37; }
+        .artifact-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid #1a1a1a; }
+        .artifact-card:hover { border-color: #d4af37; transform: translateY(-5px); }
+        .glitch-hover:hover { animation: glitch 0.2s infinite; }
+        @keyframes glitch { 0% { transform: translate(2px, 0); } 50% { transform: translate(-2px, 0); } 100% { transform: translate(0, 0); } }
     </style>
 </head>
 <body class='min-h-screen flex flex-col'>
-    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • LIVE API INTEGRATION • RANDOM WORD GENERATOR • © VIJAY FUNTAZTIC9</div></div>
+    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • 4-CORE MANIFESTATION ACTIVE • IMAGE RECOGNITION SIMULATION • INTERACT TO STABILIZE • © VIJAY FUNTAZTIC9</div></div>
 
-    <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
-        <div class='text-2xl font-bold gold-accent' style='font-family: "Playfair Display";'>F9</div>
-        <div class='flex gap-8 text-xs uppercase tracking-widest'>
-            <button onclick="showTab('store')" id='btn-store' class='tab-btn tab-active pb-1'>Manifest</button>
-            <button onclick="showTab('cart')" id='btn-cart' class='tab-btn pb-1'>Cart (<span id='cartCount'>0</span>)</button>
+    <nav class='p-6 flex justify-between items-center border-b border-zinc-900'>
+        <div class='text-2xl font-bold gold-accent tracking-tighter' style='font-family: "Playfair Display";'>F9</div>
+        <div class='flex gap-6 text-[10px] uppercase tracking-widest'>
+            <span id='energy-level'>Gallery Energy: 100%</span>
+            <button onclick='location.reload()' class='hover:text-gold-accent underline'>Re-Manifest All</button>
         </div>
     </nav>
 
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
-        <section id='tab-store'>
-            <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8 text-center'>
-                <div class='relative mb-8 group overflow-hidden bg-zinc-900 min-h-[500px] flex items-center justify-center'>
-                    <img id='prodImg' src='' class='w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-0'>
-                    <div class='absolute bottom-0 left-0 w-full p-2 bg-black/60 backdrop-blur-md'>
-                        <p class='text-[8px] uppercase tracking-widest mb-1 opacity-60'>Hindustani Soundscape</p>
-                        <audio id='mainAudio' controls class='w-full h-8 opacity-70 hover:opacity-100 transition-opacity invert'></audio>
+        
+        <div id='gallery-grid' class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16'>
+            
+        </div>
+
+        
+        <section class='border-t border-zinc-900 pt-12'>
+            <div class='grid grid-cols-1 lg:grid-cols-2 gap-12'>
+                <div class='bg-zinc-900/20 p-8 border border-zinc-800'>
+                    <h3 class='gold-accent uppercase text-xs font-bold mb-4 tracking-widest'>Mini-Game: Resonance Match</h3>
+                    <p class='text-[10px] opacity-50 mb-6'>Click the artifacts in the correct Raaga order to stabilize the gallery.</p>
+                    <div class='flex gap-2' id='game-controls'>
+                        <button onclick='gameTrigger()' class='px-6 py-2 bg-white text-black text-[10px] font-bold uppercase hover:bg-gold-accent'>Start Vibe Check</button>
                     </div>
                 </div>
-                <h3 id='prodName' class='text-4xl font-bold mb-2 uppercase tracking-tighter' style='font-family: "Playfair Display";'>Loading...</h3>
-                <p id='prodPrice' class='text-xl opacity-50 mb-8'>$0.00</p>
-                <button onclick='addToCart()' class='w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Add to Collection</button>
-                <button onclick='init()' class='mt-6 text-[9px] uppercase opacity-30 hover:opacity-100 tracking-tighter'>Re-Manifest via API</button>
+                
+                <div class='bg-zinc-900/20 p-8 border border-zinc-800'>
+                    <h3 class='gold-accent uppercase text-xs font-bold mb-4 tracking-widest'>Global Collective Signatures</h3>
+                    <div id='feed' class='h-32 overflow-y-auto text-[11px] opacity-70 space-y-2'>
+                        <p>Scanning network for other observers...</p>
+                    </div>
+                </div>
             </div>
-        </section>
-
-        <section id='tab-cart' class='hidden max-w-xl mx-auto text-center'>
-            <h2 class='text-4xl font-bold mb-8 uppercase gold-accent'>Your Collection</h2>
-            <div id='cartItems' class='space-y-4 mb-8 text-left'></div>
-            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold'>Inquire via Email</button>
         </section>
     </main>
 
@@ -56,61 +62,62 @@
     </footer>
 
     <script>
-        let currentItem = {};
-        let cart = [];
+        const raagas = ['Bhairavi', 'Kalyan', 'Todi', 'Yaman', 'Darbari', 'Desh'];
+        const visualThemes = ['Architecture', 'Nature', 'Abstract', 'Techno', 'Minimalist', 'Vintage'];
 
-        async function init() {
-            const raagas = ['Bhairavi', 'Kalyan', 'Todi', 'Yaman', 'Asavari', 'Darbari'];
-            const raaga = raagas[Math.floor(Math.random() * raagas.length)];
-            
-            try {
-                // Fetch random word from API
-                const response = await fetch('https://random-word-api.herokuapp.com/word');
-                const data = await response.json();
-                const word = data[0];
-                const fullName = `${raaga} ${word}`;
-                const price = (Math.random() * (999 - 10) + 10).toFixed(2);
-                
-                // Fetch random image from Picsum
-                const imgUrl = `https://picsum.photos/800/1000?random=${Math.random()}`;
-                
-                // Random audio selection
-                const track = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 8) + 1}.mp3`;
+        async function manifestArtifacts() {
+            const grid = document.getElementById('gallery-grid');
+            grid.innerHTML = '';
 
-                currentItem = { name: fullName, price, img: imgUrl };
+            for (let i = 0; i < 4; i++) {
+                const theme = visualThemes[Math.floor(Math.random() * visualThemes.length)];
+                const raaga = raagas[Math.floor(Math.random() * raagas.length)];
+                const imgId = Math.floor(Math.random() * 1000);
                 
-                document.getElementById('prodName').innerText = fullName;
-                document.getElementById('prodPrice').innerText = '$' + price;
-                const imgElement = document.getElementById('prodImg');
-                imgElement.src = imgUrl;
-                imgElement.onload = () => imgElement.style.opacity = '1';
-                document.getElementById('mainAudio').src = track;
-            } catch (error) {
-                console.error('Manifestation Failed:', error);
+                // Using Unsplash source to get themed images
+                const imgUrl = `https://images.unsplash.com/photo-${1500000000000 + imgId}?auto=format&fit=crop&w=500&q=80`;
+                
+                // Simulation of 'reading' the image metadata for description
+                const descriptions = [
+                    "Ethereal flow of ancient textures",
+                    "Metropolitan pulse in golden hour",
+                    "Deep meditative organic symmetry",
+                    "Structural resonance of silent light",
+                    "Primal whispers of the natural world",
+                    "Chromatic geometry in motion"
+                ];
+                const desc = descriptions[Math.floor(Math.random() * descriptions.length)];
+
+                grid.innerHTML += `
+                    <div class='artifact-card bg-zinc-900/40 p-4 flex flex-col'>
+                        <div class='relative overflow-hidden mb-4 h-64 bg-black'>
+                            <img src='${imgUrl}' class='w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700' onerror="this.src='https://picsum.photos/500/500?grayscale'">
+                            <div class='absolute top-2 right-2 bg-black/80 text-[8px] px-2 py-1 gold-accent border border-gold-accent/30'>${raaga}</div>
+                        </div>
+                        <h4 class='text-[11px] uppercase gold-accent font-bold mb-2 tracking-tighter'>${raaga} Manifestation</h4>
+                        <p class='text-[13px] font-serif italic opacity-80 leading-tight mb-4'>"${desc}"</p>
+                        <button onclick='interact(${i})' class='mt-auto py-2 border border-zinc-800 text-[9px] uppercase hover:bg-white hover:text-black transition-all glitch-hover'>Harmonize</button>
+                    </div>
+                `;
             }
         }
 
-        function addToCart() {
-            cart.push(currentItem);
-            document.getElementById('cartCount').innerText = cart.length;
-            renderCart();
-            showTab('cart');
+        function interact(id) {
+            const energy = document.getElementById('energy-level');
+            let current = parseInt(energy.innerText.replace(/\D/g,''));
+            energy.innerText = `Gallery Energy: ${current + 5}%`;
+            alert(`Artifact ${id+1} Harmonized with Vijay Funtaztic9 frequency.`);
         }
 
-        function renderCart() {
-            const container = document.getElementById('cartItems');
-            container.innerHTML = cart.length === 0 ? '<p class="text-center opacity-30">Empty</p>' : 
-                cart.map(i => `<div class='flex justify-between border-b border-zinc-800 pb-2'><span>${i.name}</span><span class='gold-accent'>$${i.price}</span></div>`).join('');
+        function gameTrigger() {
+            document.getElementById('energy-level').innerText = "Gallery Energy: SYNCHRONIZING...";
+            setTimeout(() => {
+                alert("Vibe Check Complete. Collective Consciousness Stabilized.");
+                manifestArtifacts();
+            }, 1000);
         }
 
-        function showTab(t) {
-            document.getElementById('tab-store').classList.toggle('hidden', t !== 'store');
-            document.getElementById('tab-cart').classList.toggle('hidden', t !== 'cart');
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
-            document.getElementById('btn-' + t).classList.add('tab-active');
-        }
-
-        init();
+        manifestArtifacts();
     </script>
 </body>
 </html>
