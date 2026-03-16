@@ -17,85 +17,86 @@
     </style>
 </head>
 <body class='min-h-screen flex flex-col'>
-    <div class='ticker'><div class='ticker-text' id='salesTicker'></div></div>
+    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • GLOBAL DISPATCH ACTIVE • TRANSACTION SECURE • © VIJAY FUNTAZTIC9</div></div>
 
     <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
         <div class='text-2xl font-bold gold-accent' style='font-family: "Playfair Display";'>F9</div>
         <div class='flex gap-8 text-xs uppercase tracking-widest'>
             <button onclick="showTab('store')" id='btn-store' class='tab-btn tab-active pb-1'>The Object</button>
-            <button onclick="showTab('about')" id='btn-about' class='tab-btn pb-1'>The Soul</button>
+            <button onclick="showTab('cart')" id='btn-cart' class='tab-btn pb-1'>Cart (<span id='cartCount'>0</span>)</button>
+            <button onclick="showTab('contact')" id='btn-contact' class='tab-btn pb-1'>Contact</button>
         </div>
     </nav>
 
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
         <section id='tab-store'>
-            <div class='text-center mb-16'>
-                <h1 id='catTitle' class='text-6xl font-bold uppercase tracking-tighter mb-2 opacity-20' style='font-family: "Playfair Display";'>...</h1>
-            </div>
-            <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8'>
-                <img id='prodImg' src='' class='w-full h-80 object-cover mb-8 grayscale hover:grayscale-0 transition-all duration-700'>
-                <div class='flex justify-between items-end'>
-                    <div>
-                        <p id='prodCat' class='text-[10px] gold-accent uppercase tracking-widest mb-1'></p>
-                        <h3 id='prodName' class='text-3xl font-bold'></h3>
-                    </div>
-                    <span id='prodPrice' class='text-2xl font-light opacity-50'></span>
-                </div>
-            </div>
-            <div class='text-center mt-12'>
-                <button onclick='location.reload()' class='text-[10px] tracking-[0.3em] border border-zinc-800 px-8 py-3 hover:bg-white hover:text-black transition-all'>RE-MANIFEST</button>
+            <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8 text-center'>
+                <h1 id='prodCat' class='text-[10px] gold-accent uppercase tracking-[0.5em] mb-4'></h1>
+                <img id='prodImg' src='' class='w-full h-96 object-cover mb-8 grayscale hover:grayscale-0 transition-all duration-1000'>
+                <h3 id='prodName' class='text-4xl font-bold mb-2' style='font-family: "Playfair Display";'></h3>
+                <p id='prodPrice' class='text-xl opacity-50 mb-8'></p>
+                <button onclick='addToCart()' class='w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Add to Collection</button>
+                <button onclick='location.reload()' class='mt-4 text-[9px] uppercase opacity-30 hover:opacity-100'>Re-Manifest New Object</button>
             </div>
         </section>
 
-        <section id='tab-about' class='hidden max-w-2xl mx-auto text-center'>
-            <h2 id='storyTitle' class='text-4xl font-bold mb-8 uppercase' style='font-family: "Playfair Display";'></h2>
-            <div class='mb-12 p-8 border border-zinc-800 bg-zinc-900/40'>
-                <p class='text-[10px] tracking-[0.3em] uppercase mb-4 opacity-40'>Ambient Accompaniment</p>
-                <audio id='mainAudio' controls class='mx-auto opacity-30 hover:opacity-100 transition-opacity invert w-full'></audio>
-            </div>
-            <p id='storyText' class='text-zinc-400 leading-relaxed text-lg serif italic'></p>
+        <section id='tab-cart' class='hidden max-w-xl mx-auto text-center'>
+            <h2 class='text-4xl font-bold mb-8 uppercase gold-accent'>Your Collection</h2>
+            <div id='cartItems' class='space-y-4 mb-8 text-left'></div>
+            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Order Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold'>Proceed to Inquiry</button>
+        </section>
+
+        <section id='tab-contact' class='hidden max-w-xl mx-auto border border-zinc-800 p-8'>
+            <h2 class='text-3xl font-bold mb-6 gold-accent uppercase'>Contact Vijay</h2>
+            <form action='mailto:vijay9blr@gmail.com' method='post' enctype='text/plain' class='space-y-4'>
+                <input type='text' name='name' placeholder='NAME' class='w-full bg-zinc-900 border border-zinc-800 p-3 text-sm outline-none'>
+                <textarea name='message' placeholder='MESSAGE' rows='4' class='w-full bg-zinc-900 border border-zinc-800 p-3 text-sm outline-none'></textarea>
+                <button type='submit' class='w-full py-3 bg-zinc-100 text-black font-bold uppercase text-xs'>Send Email</button>
+            </form>
         </section>
     </main>
 
+    <footer class='p-8 text-[10px] text-center opacity-30 border-t border-zinc-900 uppercase tracking-widest'>
+        © Copyright Vijay Funtaztic9. All Rights Reserved.
+    </footer>
+
     <script>
-        const productLib = [
-            { name: 'Sunset Aura Lamp', cat: 'Lighting', price: 45, img: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c', story: 'Capturing the final glow of a desert dusk.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-            { name: 'Zenith Tech Stand', cat: 'Office', price: 30, img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8', story: 'Structural integrity meeting digital fluidity.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-            { name: 'Bhairavi Sneaker', cat: 'Footwear', price: 180, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a', story: 'Walking to the rhythm of the morning raga.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-            { name: 'Sitar Case 2.0', cat: 'Accessories', price: 120, img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17', story: 'Protection for the vibrations of the soul.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
-            { name: 'Neon Bonsai', cat: 'Decor', price: 65, img: 'https://images.unsplash.com/photo-1512428813834-c702c7702b78', story: 'Nature, reimagined for the cyberpunk age.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' }
-            // Logic allows for 50+ entries here
-        ];
+        const items = ['Ergonomic Chair', 'Mechanical Keyboard', 'Sunset Lamp', 'Leather Boots', 'Minimalist Watch', 'Wireless Headphones', 'Bamboo Planter', 'Ceramic Vase'];
+        let currentItem = {};
+        let cart = [];
 
-        function render() {
-            const item = productLib[Math.floor(Math.random() * productLib.length)];
+        function init() {
+            const name = items[Math.floor(Math.random() * items.length)];
+            const price = (Math.random() * (500 - 20) + 20).toFixed(2);
+            currentItem = { name, price, img: `https://source.unsplash.com/featured/?${name.replace(' ', ',')}` };
             
-            // Tab 1: Store
-            document.getElementById('catTitle').innerText = item.cat;
-            document.getElementById('prodImg').src = item.img;
-            document.getElementById('prodName').innerText = item.name;
-            document.getElementById('prodCat').innerText = item.cat;
-            document.getElementById('prodPrice').innerText = '$' + item.price;
+            document.getElementById('prodName').innerText = currentItem.name;
+            document.getElementById('prodCat').innerText = 'F9 SELECTION';
+            document.getElementById('prodPrice').innerText = '$' + currentItem.price;
+            document.getElementById('prodImg').src = currentItem.img;
+        }
 
-            // Tab 2: Story/Audio
-            document.getElementById('storyTitle').innerText = item.name + ' Origins';
-            document.getElementById('storyText').innerText = item.story;
-            document.getElementById('mainAudio').src = item.audio;
+        function addToCart() {
+            cart.push(currentItem);
+            document.getElementById('cartCount').innerText = cart.length;
+            renderCart();
+            showTab('cart');
+        }
 
-            // Ticker
-            const locations = ['Dubai', 'New Delhi', 'San Francisco', 'Tokyo', 'London'];
-            const loc = locations[Math.floor(Math.random() * locations.length)];
-            document.getElementById('salesTicker').innerText = `GLOBAL SALE: ${item.name} dispatched to ${loc} • TRANSACTION VERIFIED • SHIPPING VIA F9 LOGISTICS • `;
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            if(cart.length === 0) container.innerHTML = '<p class="text-center opacity-30">Empty</p>';
+            else container.innerHTML = cart.map(i => `<div class='flex justify-between border-b border-zinc-800 pb-2'><span>${i.name}</span><span class='gold-accent'>$${i.price}</span></div>`).join('');
         }
 
         function showTab(t) {
-            document.getElementById('tab-store').classList.toggle('hidden', t !== 'store');
-            document.getElementById('tab-about').classList.toggle('hidden', t !== 'about');
+            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
+            document.getElementById('tab-' + t).classList.remove('hidden');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
             document.getElementById('btn-' + t).classList.add('tab-active');
         }
 
-        render();
+        init();
     </script>
 </body>
 </html>
