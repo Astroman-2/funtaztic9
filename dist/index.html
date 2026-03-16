@@ -3,7 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Funtaztic 9 | Soul & Sole</title>
+    <title>Funtaztic 9 | API Manifest</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;600&display=swap');
@@ -14,11 +14,10 @@
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .hidden { display: none; }
         .tab-active { color: #d4af37; border-bottom: 2px solid #d4af37; }
-        audio::-webkit-media-controls-panel { background-color: #d4af37; }
     </style>
 </head>
 <body class='min-h-screen flex flex-col'>
-    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • SOUND OF THE RISING SUN • © VIJAY FUNTAZTIC9 • GLOBAL DISPATCH</div></div>
+    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • LIVE API INTEGRATION • RANDOM WORD GENERATOR • © VIJAY FUNTAZTIC9</div></div>
 
     <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
         <div class='text-2xl font-bold gold-accent' style='font-family: "Playfair Display";'>F9</div>
@@ -31,24 +30,24 @@
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
         <section id='tab-store'>
             <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8 text-center'>
-                <div class='relative mb-8 group overflow-hidden'>
-                    <img id='prodImg' src='' class='w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000'>
+                <div class='relative mb-8 group overflow-hidden bg-zinc-900 min-h-[500px] flex items-center justify-center'>
+                    <img id='prodImg' src='' class='w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 opacity-0'>
                     <div class='absolute bottom-0 left-0 w-full p-2 bg-black/60 backdrop-blur-md'>
-                        <p class='text-[8px] uppercase tracking-widest mb-1 opacity-60'>Hindustani Ambient</p>
+                        <p class='text-[8px] uppercase tracking-widest mb-1 opacity-60'>Hindustani Soundscape</p>
                         <audio id='mainAudio' controls class='w-full h-8 opacity-70 hover:opacity-100 transition-opacity invert'></audio>
                     </div>
                 </div>
-                <h3 id='prodName' class='text-3xl font-bold mb-2 uppercase' style='font-family: "Playfair Display";'></h3>
-                <p id='prodPrice' class='text-xl opacity-50 mb-8'></p>
+                <h3 id='prodName' class='text-4xl font-bold mb-2 uppercase tracking-tighter' style='font-family: "Playfair Display";'>Loading...</h3>
+                <p id='prodPrice' class='text-xl opacity-50 mb-8'>$0.00</p>
                 <button onclick='addToCart()' class='w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Add to Collection</button>
-                <button onclick='location.reload()' class='mt-6 text-[9px] uppercase opacity-30 hover:opacity-100 tracking-tighter'>Re-Manifest New Object</button>
+                <button onclick='init()' class='mt-6 text-[9px] uppercase opacity-30 hover:opacity-100 tracking-tighter'>Re-Manifest via API</button>
             </div>
         </section>
 
         <section id='tab-cart' class='hidden max-w-xl mx-auto text-center'>
             <h2 class='text-4xl font-bold mb-8 uppercase gold-accent'>Your Collection</h2>
             <div id='cartItems' class='space-y-4 mb-8 text-left'></div>
-            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Order Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold hover:bg-gold-accent hover:text-black transition-all'>Inquire via Email</button>
+            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold'>Inquire via Email</button>
         </section>
     </main>
 
@@ -57,36 +56,38 @@
     </footer>
 
     <script>
-        const productLib = [
-            { name: 'Bhairavi Sneaker', keyword: 'sneaker', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-            { name: 'Kalyan Lamp', keyword: 'lamp', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-            { name: 'Todi Tech Stand', keyword: 'desk', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
-            { name: 'Yaman Watch', keyword: 'watch', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
-        ];
         let currentItem = {};
         let cart = [];
 
-        function init() {
-            const item = productLib[Math.floor(Math.random() * productLib.length)];
-            const price = (Math.random() * (400 - 50) + 50).toFixed(2);
+        async function init() {
+            const raagas = ['Bhairavi', 'Kalyan', 'Todi', 'Yaman', 'Asavari', 'Darbari'];
+            const raaga = raagas[Math.floor(Math.random() * raagas.length)];
             
-            // Using reliable Unsplash URL parameters for high-end curated photos
-            const imgUrl = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=800&q=80&sig=${Math.random()}&q=${item.keyword}`;
-            
-            // Fallback strategy: Specific curated high-quality IDs if the keyword fails
-            const curatedImages = {
-                'sneaker': 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
-                'lamp': 'https://images.unsplash.com/photo-1507473885765-e6ed657f9971',
-                'desk': 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd',
-                'watch': 'https://images.unsplash.com/photo-1524592094714-0f0654e20314'
-            };
+            try {
+                // Fetch random word from API
+                const response = await fetch('https://random-word-api.herokuapp.com/word');
+                const data = await response.json();
+                const word = data[0];
+                const fullName = `${raaga} ${word}`;
+                const price = (Math.random() * (999 - 10) + 10).toFixed(2);
+                
+                // Fetch random image from Picsum
+                const imgUrl = `https://picsum.photos/800/1000?random=${Math.random()}`;
+                
+                // Random audio selection
+                const track = `https://www.soundhelix.com/examples/mp3/SoundHelix-Song-${Math.floor(Math.random() * 8) + 1}.mp3`;
 
-            currentItem = { name: item.name, price, img: curatedImages[item.keyword] };
-            
-            document.getElementById('prodName').innerText = item.name;
-            document.getElementById('prodPrice').innerText = '$' + price;
-            document.getElementById('prodImg').src = curatedImages[item.keyword] + '?auto=format&fit=crop&w=800&q=80';
-            document.getElementById('mainAudio').src = item.audio;
+                currentItem = { name: fullName, price, img: imgUrl };
+                
+                document.getElementById('prodName').innerText = fullName;
+                document.getElementById('prodPrice').innerText = '$' + price;
+                const imgElement = document.getElementById('prodImg');
+                imgElement.src = imgUrl;
+                imgElement.onload = () => imgElement.style.opacity = '1';
+                document.getElementById('mainAudio').src = track;
+            } catch (error) {
+                console.error('Manifestation Failed:', error);
+            }
         }
 
         function addToCart() {
