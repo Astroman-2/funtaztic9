@@ -3,18 +3,72 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Funtaztic9 | House of the Rising Sun</title>
+    <title>Funtaztic 9 | Global Footwear</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <style>
-        body { background-color: #0a0a0a; color: #c5a059; }
-        .neon-border { border: 1px solid #c5a059; box-shadow: 0 0 10px #c5a059; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap');
+        body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
+        .gold-accent { color: #d4af37; }
+        .bg-dark-card { background-color: #0f0f0f; border: 1px solid #1a1a1a; }
+        .nav-link { letter-spacing: 0.1em; text-transform: uppercase; font-size: 0.75rem; }
     </style>
 </head>
-<body class='flex items-center justify-center h-screen flex-col'>
-    <h1 class='text-6xl font-serif mb-4 uppercase tracking-tighter'>FUNTAZTIC 9</h1>
-    <p class='text-xl italic opacity-80'>Flashy Sneakers & Modern Sandals</p>
-    <div class='mt-8 p-6 neon-border bg-black'>
-        <p class='text-sm tracking-widest uppercase'>The Soul of the Desert meets the Neon of the City</p>
-    </div>
+<body class='min-h-screen'>
+    <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
+        <div class='text-2xl font-bold tracking-tighter gold-accent' style='font-family: "Playfair Display";'>F9</div>
+        <div class='flex gap-4 items-center'>
+            <select id='currencySelector' class='bg-black border border-zinc-700 text-xs p-2 rounded focus:outline-none focus:border-gold-accent'>
+                <option value='USD'>USD ($)</option>
+                <option value='GBP'>GBP (£)</option>
+                <option value='INR'>INR (₹)</option>
+                <option value='PHP'>PHP (₱)</option>
+                <option value='JPY'>JPY (¥)</option>
+            </select>
+        </div>
+    </nav>
+
+    <header class='py-20 text-center'>
+        <h1 class='text-6xl md:text-8xl font-bold mb-4 tracking-tighter' style='font-family: "Playfair Display";'>THE COLLECTION</h1>
+        <p class='uppercase tracking-[0.4em] text-xs opacity-50'>Flashy Sneakers & Essential Sandals</p>
+    </header>
+
+    <main class='max-w-7xl mx-auto px-6 pb-20 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8' id='productGrid'>
+        
+    </main>
+
+    <script>
+        const rates = { USD: 1, GBP: 0.78, INR: 82.9, PHP: 55.8, JPY: 150.2 };
+        const products = [
+            { id: 1, name: 'Phoenix Blaze', basePrice: 180, img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff', cat: 'Sneaker' },
+            { id: 2, name: 'Desert Nomad 2.0', basePrice: 95, img: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77', cat: 'Sandal' },
+            { id: 3, name: 'Neon Spectre', basePrice: 220, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a', cat: 'Sneaker' },
+            { id: 4, name: 'Azure Glide', basePrice: 140, img: 'https://images.unsplash.com/photo-1552346154-21d32810aba3', cat: 'Sneaker' },
+            { id: 5, name: 'Ironwood Sandal', basePrice: 110, img: 'https://images.unsplash.com/photo-1562273103-919740f44246', cat: 'Sandal' },
+            { id: 6, name: 'Velocita X', basePrice: 300, img: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa', cat: 'Limited' }
+        ];
+
+        function render() {
+            const curr = document.getElementById('currencySelector').value;
+            const symbol = curr === 'USD' ? '$' : curr === 'GBP' ? '£' : curr === 'INR' ? '₹' : curr === 'PHP' ? '₱' : '¥';
+            
+            document.getElementById('productGrid').innerHTML = products.map(p => `
+                <div class='bg-dark-card p-4 group transition-all hover:border-zinc-700'>
+                    <div class='h-80 overflow-hidden bg-black mb-6'>
+                        <img src='${p.img}' class='w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-100 group-hover:scale-110' />
+                    </div>
+                    <div class='flex justify-between items-center'>
+                        <div>
+                            <p class='text-[10px] uppercase tracking-widest opacity-40 mb-1'>${p.cat}</p>
+                            <h3 class='text-xl font-bold uppercase'>${p.name}</h3>
+                        </div>
+                        <p class='text-lg gold-accent'>${symbol}${(p.basePrice * rates[curr]).toLocaleString()}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        document.getElementById('currencySelector').addEventListener('change', render);
+        render();
+    </script>
 </body>
 </html>
