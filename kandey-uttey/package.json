@@ -1,27 +1,24 @@
 {
   "name": "kandey-uttey",
   "version": "1.0.0",
-  "description": "Lyric-Image Blog application",
+  "description": "Lyric Art Blog",
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
     "server": "nodemon server/index.js",
-    "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "prisma:generate": "npx prisma generate",
-    "prisma:migrate": "npx prisma migrate dev"
+    "client": "cd client && npm start",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "dependencies": {
-    "express": "^4.18.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
     "@prisma/client": "^5.0.0",
-    "youtube-transcript": "^1.0.6",
-    "axios": "^1.4.0"
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0",
+    "express": "^4.18.2",
+    "youtube-transcript": "^1.0.6"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1",
-    "concurrently": "^8.2.0",
+    "concurrently": "^8.0.1",
+    "nodemon": "^2.0.22",
     "prisma": "^5.0.0"
   }
 }

@@ -27,7 +27,7 @@ model Comment {
 
 model Reaction {
   id     Int    @id @default(autoincrement())
-  type   String // 🔥, ❤️, 😮, 👏
+  type   String
   postId Int
   post   Post   @relation(fields: [postId], references: [id])
 }
