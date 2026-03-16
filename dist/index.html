@@ -31,14 +31,14 @@
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
         <section id='tab-store'>
             <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8 text-center'>
-                <div class='relative mb-8 group'>
-                    <img id='prodImg' src='' class='w-full h-96 object-cover grayscale group-hover:grayscale-0 transition-all duration-1000'>
+                <div class='relative mb-8 group overflow-hidden'>
+                    <img id='prodImg' src='' class='w-full h-[500px] object-cover grayscale group-hover:grayscale-0 transition-all duration-1000'>
                     <div class='absolute bottom-0 left-0 w-full p-2 bg-black/60 backdrop-blur-md'>
                         <p class='text-[8px] uppercase tracking-widest mb-1 opacity-60'>Hindustani Ambient</p>
                         <audio id='mainAudio' controls class='w-full h-8 opacity-70 hover:opacity-100 transition-opacity invert'></audio>
                     </div>
                 </div>
-                <h3 id='prodName' class='text-3xl font-bold mb-2' style='font-family: "Playfair Display";'></h3>
+                <h3 id='prodName' class='text-3xl font-bold mb-2 uppercase' style='font-family: "Playfair Display";'></h3>
                 <p id='prodPrice' class='text-xl opacity-50 mb-8'></p>
                 <button onclick='addToCart()' class='w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Add to Collection</button>
                 <button onclick='location.reload()' class='mt-6 text-[9px] uppercase opacity-30 hover:opacity-100 tracking-tighter'>Re-Manifest New Object</button>
@@ -58,10 +58,10 @@
 
     <script>
         const productLib = [
-            { name: 'Bhairavi Sneaker', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
-            { name: 'Kalyan Lamp', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
-            { name: 'Todi Tech Stand', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
-            { name: 'Yaman Watch', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
+            { name: 'Bhairavi Sneaker', keyword: 'sneaker', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+            { name: 'Kalyan Lamp', keyword: 'lamp', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+            { name: 'Todi Tech Stand', keyword: 'desk', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3' },
+            { name: 'Yaman Watch', keyword: 'watch', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
         ];
         let currentItem = {};
         let cart = [];
@@ -69,14 +69,23 @@
         function init() {
             const item = productLib[Math.floor(Math.random() * productLib.length)];
             const price = (Math.random() * (400 - 50) + 50).toFixed(2);
-            // Fixed Image Fetching Logic
-            const imgUrl = `https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80`; 
             
-            currentItem = { name: item.name, price, img: imgUrl };
+            // Using reliable Unsplash URL parameters for high-end curated photos
+            const imgUrl = `https://images.unsplash.com/photo-1?auto=format&fit=crop&w=800&q=80&sig=${Math.random()}&q=${item.keyword}`;
+            
+            // Fallback strategy: Specific curated high-quality IDs if the keyword fails
+            const curatedImages = {
+                'sneaker': 'https://images.unsplash.com/photo-1542291026-7eec264c27ff',
+                'lamp': 'https://images.unsplash.com/photo-1507473885765-e6ed657f9971',
+                'desk': 'https://images.unsplash.com/photo-1518455027359-f3f8164ba6bd',
+                'watch': 'https://images.unsplash.com/photo-1524592094714-0f0654e20314'
+            };
+
+            currentItem = { name: item.name, price, img: curatedImages[item.keyword] };
             
             document.getElementById('prodName').innerText = item.name;
             document.getElementById('prodPrice').innerText = '$' + price;
-            document.getElementById('prodImg').src = `https://source.unsplash.com/800x1000/?${item.name.split(' ')[1]}`;
+            document.getElementById('prodImg').src = curatedImages[item.keyword] + '?auto=format&fit=crop&w=800&q=80';
             document.getElementById('mainAudio').src = item.audio;
         }
 
