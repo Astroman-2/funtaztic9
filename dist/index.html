@@ -3,7 +3,7 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Funtaztic 9 | Dynamic Concept Store</title>
+    <title>Funtaztic 9 | Soul & Sole</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;600&display=swap');
@@ -14,45 +14,41 @@
         @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .hidden { display: none; }
         .tab-active { color: #d4af37; border-bottom: 2px solid #d4af37; }
+        audio::-webkit-media-controls-panel { background-color: #d4af37; }
     </style>
 </head>
 <body class='min-h-screen flex flex-col'>
-    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • GLOBAL DISPATCH ACTIVE • TRANSACTION SECURE • © VIJAY FUNTAZTIC9</div></div>
+    <div class='ticker'><div class='ticker-text'>© VIJAY FUNTAZTIC9 • SOUND OF THE RISING SUN • © VIJAY FUNTAZTIC9 • GLOBAL DISPATCH</div></div>
 
     <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
         <div class='text-2xl font-bold gold-accent' style='font-family: "Playfair Display";'>F9</div>
         <div class='flex gap-8 text-xs uppercase tracking-widest'>
-            <button onclick="showTab('store')" id='btn-store' class='tab-btn tab-active pb-1'>The Object</button>
+            <button onclick="showTab('store')" id='btn-store' class='tab-btn tab-active pb-1'>Manifest</button>
             <button onclick="showTab('cart')" id='btn-cart' class='tab-btn pb-1'>Cart (<span id='cartCount'>0</span>)</button>
-            <button onclick="showTab('contact')" id='btn-contact' class='tab-btn pb-1'>Contact</button>
         </div>
     </nav>
 
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
         <section id='tab-store'>
             <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8 text-center'>
-                <h1 id='prodCat' class='text-[10px] gold-accent uppercase tracking-[0.5em] mb-4'></h1>
-                <img id='prodImg' src='' class='w-full h-96 object-cover mb-8 grayscale hover:grayscale-0 transition-all duration-1000'>
-                <h3 id='prodName' class='text-4xl font-bold mb-2' style='font-family: "Playfair Display";'></h3>
+                <div class='relative mb-8 group'>
+                    <img id='prodImg' src='' class='w-full h-96 object-cover grayscale group-hover:grayscale-0 transition-all duration-1000'>
+                    <div class='absolute bottom-0 left-0 w-full p-2 bg-black/60 backdrop-blur-md'>
+                        <p class='text-[8px] uppercase tracking-widest mb-1 opacity-60'>Hindustani Ambient</p>
+                        <audio id='mainAudio' controls class='w-full h-8 opacity-70 hover:opacity-100 transition-opacity invert'></audio>
+                    </div>
+                </div>
+                <h3 id='prodName' class='text-3xl font-bold mb-2' style='font-family: "Playfair Display";'></h3>
                 <p id='prodPrice' class='text-xl opacity-50 mb-8'></p>
                 <button onclick='addToCart()' class='w-full py-4 bg-white text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Add to Collection</button>
-                <button onclick='location.reload()' class='mt-4 text-[9px] uppercase opacity-30 hover:opacity-100'>Re-Manifest New Object</button>
+                <button onclick='location.reload()' class='mt-6 text-[9px] uppercase opacity-30 hover:opacity-100 tracking-tighter'>Re-Manifest New Object</button>
             </div>
         </section>
 
         <section id='tab-cart' class='hidden max-w-xl mx-auto text-center'>
             <h2 class='text-4xl font-bold mb-8 uppercase gold-accent'>Your Collection</h2>
             <div id='cartItems' class='space-y-4 mb-8 text-left'></div>
-            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Order Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold'>Proceed to Inquiry</button>
-        </section>
-
-        <section id='tab-contact' class='hidden max-w-xl mx-auto border border-zinc-800 p-8'>
-            <h2 class='text-3xl font-bold mb-6 gold-accent uppercase'>Contact Vijay</h2>
-            <form action='mailto:vijay9blr@gmail.com' method='post' enctype='text/plain' class='space-y-4'>
-                <input type='text' name='name' placeholder='NAME' class='w-full bg-zinc-900 border border-zinc-800 p-3 text-sm outline-none'>
-                <textarea name='message' placeholder='MESSAGE' rows='4' class='w-full bg-zinc-900 border border-zinc-800 p-3 text-sm outline-none'></textarea>
-                <button type='submit' class='w-full py-3 bg-zinc-100 text-black font-bold uppercase text-xs'>Send Email</button>
-            </form>
+            <button onclick="window.location.href='mailto:vijay9blr@gmail.com?subject=Order Inquiry from Funtaztic9'" class='w-full py-4 border border-gold gold-accent uppercase text-xs font-bold hover:bg-gold-accent hover:text-black transition-all'>Inquire via Email</button>
         </section>
     </main>
 
@@ -61,19 +57,27 @@
     </footer>
 
     <script>
-        const items = ['Ergonomic Chair', 'Mechanical Keyboard', 'Sunset Lamp', 'Leather Boots', 'Minimalist Watch', 'Wireless Headphones', 'Bamboo Planter', 'Ceramic Vase'];
+        const productLib = [
+            { name: 'Bhairavi Sneaker', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+            { name: 'Kalyan Lamp', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+            { name: 'Todi Tech Stand', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+            { name: 'Yaman Watch', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' }
+        ];
         let currentItem = {};
         let cart = [];
 
         function init() {
-            const name = items[Math.floor(Math.random() * items.length)];
-            const price = (Math.random() * (500 - 20) + 20).toFixed(2);
-            currentItem = { name, price, img: `https://source.unsplash.com/featured/?${name.replace(' ', ',')}` };
+            const item = productLib[Math.floor(Math.random() * productLib.length)];
+            const price = (Math.random() * (400 - 50) + 50).toFixed(2);
+            // Fixed Image Fetching Logic
+            const imgUrl = `https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=800&q=80`; 
             
-            document.getElementById('prodName').innerText = currentItem.name;
-            document.getElementById('prodCat').innerText = 'F9 SELECTION';
-            document.getElementById('prodPrice').innerText = '$' + currentItem.price;
-            document.getElementById('prodImg').src = currentItem.img;
+            currentItem = { name: item.name, price, img: imgUrl };
+            
+            document.getElementById('prodName').innerText = item.name;
+            document.getElementById('prodPrice').innerText = '$' + price;
+            document.getElementById('prodImg').src = `https://source.unsplash.com/800x1000/?${item.name.split(' ')[1]}`;
+            document.getElementById('mainAudio').src = item.audio;
         }
 
         function addToCart() {
@@ -85,13 +89,13 @@
 
         function renderCart() {
             const container = document.getElementById('cartItems');
-            if(cart.length === 0) container.innerHTML = '<p class="text-center opacity-30">Empty</p>';
-            else container.innerHTML = cart.map(i => `<div class='flex justify-between border-b border-zinc-800 pb-2'><span>${i.name}</span><span class='gold-accent'>$${i.price}</span></div>`).join('');
+            container.innerHTML = cart.length === 0 ? '<p class="text-center opacity-30">Empty</p>' : 
+                cart.map(i => `<div class='flex justify-between border-b border-zinc-800 pb-2'><span>${i.name}</span><span class='gold-accent'>$${i.price}</span></div>`).join('');
         }
 
         function showTab(t) {
-            document.querySelectorAll('main > section').forEach(s => s.classList.add('hidden'));
-            document.getElementById('tab-' + t).classList.remove('hidden');
+            document.getElementById('tab-store').classList.toggle('hidden', t !== 'store');
+            document.getElementById('tab-cart').classList.toggle('hidden', t !== 'cart');
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
             document.getElementById('btn-' + t).classList.add('tab-active');
         }
