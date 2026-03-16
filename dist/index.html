@@ -3,85 +3,99 @@
 <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <title>Funtaztic 9 | Soul & Sole</title>
+    <title>Funtaztic 9 | Dynamic Concept Store</title>
     <script src='https://cdn.tailwindcss.com'></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;600&display=swap');
         body { background-color: #050505; color: #e5e5e5; font-family: 'Inter', sans-serif; }
         .gold-accent { color: #d4af37; }
-        .border-gold { border-color: #d4af37; }
-        .tab-active { color: #d4af37; border-bottom: 2px solid #d4af37; }
+        .ticker { background: #d4af37; color: #000; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding: 4px 0; overflow: hidden; }
+        .ticker-text { display: inline-block; white-space: nowrap; animation: ticker 40s linear infinite; }
+        @keyframes ticker { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
         .hidden { display: none; }
-        .ticker { white-space: nowrap; overflow: hidden; position: relative; background: #d4af37; color: #000; font-weight: 800; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; padding: 4px 0; }
-        .ticker-text { display: inline-block; padding-left: 100%; animation: ticker 30s linear infinite; }
-        @keyframes ticker { 0% { transform: translate(0, 0); } 100% { transform: translate(-100%, 0); } }
+        .tab-active { color: #d4af37; border-bottom: 2px solid #d4af37; }
     </style>
 </head>
 <body class='min-h-screen flex flex-col'>
-    <div class='ticker'>
-        <div class='ticker-text'>
-            LATEST SALES: Phoenix Blaze shipped to Mumbai (₹14,900) • Desert Nomad shipped to London (£75) • Neon Spectre shipped to Tokyo (¥33,000) • Phoenix Blaze shipped to Manila (₱10,050) • Ironwood Sandal shipped to New York ($110) •
-        </div>
-    </div>
+    <div class='ticker'><div class='ticker-text' id='salesTicker'></div></div>
 
     <nav class='p-8 flex justify-between items-center border-b border-zinc-900'>
-        <div class='text-2xl font-bold tracking-tighter gold-accent' style='font-family: "Playfair Display";'>F9</div>
+        <div class='text-2xl font-bold gold-accent' style='font-family: "Playfair Display";'>F9</div>
         <div class='flex gap-8 text-xs uppercase tracking-widest'>
-            <button onclick="showTab('collections')" id='btn-collections' class='tab-btn tab-active pb-2'>Collections</button>
-            <button onclick="showTab('about')" id='btn-about' class='tab-btn pb-2 hover:text-white transition-colors'>Our Story</button>
-            <button onclick="showTab('contact')" id='btn-contact' class='tab-btn pb-2 hover:text-white transition-colors'>Contact</button>
+            <button onclick="showTab('store')" id='btn-store' class='tab-btn tab-active pb-1'>The Object</button>
+            <button onclick="showTab('about')" id='btn-about' class='tab-btn pb-1'>The Soul</button>
         </div>
     </nav>
 
     <main class='flex-grow max-w-7xl mx-auto px-6 py-12 w-full'>
-        
-        <section id='tab-collections' class='tab-content'>
-            <div class='grid grid-cols-1 md:grid-cols-3 gap-8' id='productGrid'></div>
+        <section id='tab-store'>
+            <div class='text-center mb-16'>
+                <h1 id='catTitle' class='text-6xl font-bold uppercase tracking-tighter mb-2 opacity-20' style='font-family: "Playfair Display";'>...</h1>
+            </div>
+            <div id='productBox' class='max-w-md mx-auto bg-zinc-900/20 border border-zinc-800 p-8'>
+                <img id='prodImg' src='' class='w-full h-80 object-cover mb-8 grayscale hover:grayscale-0 transition-all duration-700'>
+                <div class='flex justify-between items-end'>
+                    <div>
+                        <p id='prodCat' class='text-[10px] gold-accent uppercase tracking-widest mb-1'></p>
+                        <h3 id='prodName' class='text-3xl font-bold'></h3>
+                    </div>
+                    <span id='prodPrice' class='text-2xl font-light opacity-50'></span>
+                </div>
+            </div>
+            <div class='text-center mt-12'>
+                <button onclick='location.reload()' class='text-[10px] tracking-[0.3em] border border-zinc-800 px-8 py-3 hover:bg-white hover:text-black transition-all'>RE-MANIFEST</button>
+            </div>
         </section>
 
-        
-        <section id='tab-about' class='tab-content hidden max-w-2xl mx-auto text-center'>
-            <h2 class='text-5xl font-bold mb-8 uppercase gold-accent' style='font-family: "Playfair Display";'>Hindustani Soul</h2>
-            <div class='mb-12 p-6 border border-zinc-800 bg-zinc-900/20'>
-                <p class='text-xs tracking-[0.3em] uppercase mb-4 opacity-60'>Ambient Soundscape: Raag Bhairavi (Qawwali Edit)</p>
-                <audio controls class='mx-auto opacity-40 hover:opacity-100 transition-opacity invert'>
-                    <source src='https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' type='audio/mpeg'>
-                </audio>
-                <p class='mt-4 text-[10px] uppercase opacity-40 italic'>Best experienced with headphones</p>
+        <section id='tab-about' class='hidden max-w-2xl mx-auto text-center'>
+            <h2 id='storyTitle' class='text-4xl font-bold mb-8 uppercase' style='font-family: "Playfair Display";'></h2>
+            <div class='mb-12 p-8 border border-zinc-800 bg-zinc-900/40'>
+                <p class='text-[10px] tracking-[0.3em] uppercase mb-4 opacity-40'>Ambient Accompaniment</p>
+                <audio id='mainAudio' controls class='mx-auto opacity-30 hover:opacity-100 transition-opacity invert w-full'></audio>
             </div>
-            <p class='text-zinc-400 leading-relaxed mb-6'>Funtaztic 9 merges the rhythmic structure of Adi Talam with modern street silhouettes. Like a Qawwali performance, our footwear starts with tradition and builds into something electrifying.</p>
-        </section>
-
-        
-        <section id='tab-contact' class='tab-content hidden max-w-xl mx-auto border border-zinc-800 p-8'>
-            <h2 class='text-3xl font-bold mb-6 gold-accent uppercase'>Reach Out</h2>
-            <div class='space-y-4'>
-                <input type='text' placeholder='NAME' class='w-full bg-zinc-900 border border-zinc-800 p-3 text-sm focus:border-gold-accent outline-none'>
-                <button class='w-full py-3 bg-zinc-100 text-black font-bold uppercase text-xs tracking-widest hover:bg-gold-accent transition-colors'>Submit</button>
-            </div>
+            <p id='storyText' class='text-zinc-400 leading-relaxed text-lg serif italic'></p>
         </section>
     </main>
 
     <script>
-        const products = [
-            { name: 'Phoenix Blaze', price: '$180', img: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff' },
-            { name: 'Desert Nomad', price: '$95', img: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77' },
-            { name: 'Neon Spectre', price: '$220', img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a' }
+        const productLib = [
+            { name: 'Sunset Aura Lamp', cat: 'Lighting', price: 45, img: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c', story: 'Capturing the final glow of a desert dusk.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3' },
+            { name: 'Zenith Tech Stand', cat: 'Office', price: 30, img: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8', story: 'Structural integrity meeting digital fluidity.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3' },
+            { name: 'Bhairavi Sneaker', cat: 'Footwear', price: 180, img: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a', story: 'Walking to the rhythm of the morning raga.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3' },
+            { name: 'Sitar Case 2.0', cat: 'Accessories', price: 120, img: 'https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17', story: 'Protection for the vibrations of the soul.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3' },
+            { name: 'Neon Bonsai', cat: 'Decor', price: 65, img: 'https://images.unsplash.com/photo-1512428813834-c702c7702b78', story: 'Nature, reimagined for the cyberpunk age.', audio: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3' }
+            // Logic allows for 50+ entries here
         ];
 
-        function showTab(tabName) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('tab-active'));
-            document.getElementById('tab-' + tabName).classList.remove('hidden');
-            document.getElementById('btn-' + tabName).classList.add('tab-active');
+        function render() {
+            const item = productLib[Math.floor(Math.random() * productLib.length)];
+            
+            // Tab 1: Store
+            document.getElementById('catTitle').innerText = item.cat;
+            document.getElementById('prodImg').src = item.img;
+            document.getElementById('prodName').innerText = item.name;
+            document.getElementById('prodCat').innerText = item.cat;
+            document.getElementById('prodPrice').innerText = '$' + item.price;
+
+            // Tab 2: Story/Audio
+            document.getElementById('storyTitle').innerText = item.name + ' Origins';
+            document.getElementById('storyText').innerText = item.story;
+            document.getElementById('mainAudio').src = item.audio;
+
+            // Ticker
+            const locations = ['Dubai', 'New Delhi', 'San Francisco', 'Tokyo', 'London'];
+            const loc = locations[Math.floor(Math.random() * locations.length)];
+            document.getElementById('salesTicker').innerText = `GLOBAL SALE: ${item.name} dispatched to ${loc} • TRANSACTION VERIFIED • SHIPPING VIA F9 LOGISTICS • `;
         }
 
-        document.getElementById('productGrid').innerHTML = products.map(p => `
-            <div class='bg-zinc-900/30 border border-zinc-900 p-4'>
-                <img src='${p.img}' class='w-full h-72 object-cover mb-4 grayscale hover:grayscale-0 transition-all'>
-                <div class='flex justify-between font-bold'><span>${p.name}</span><span class='gold-accent'>${p.price}</span></div>
-            </div>
-        `).join('');
+        function showTab(t) {
+            document.getElementById('tab-store').classList.toggle('hidden', t !== 'store');
+            document.getElementById('tab-about').classList.toggle('hidden', t !== 'about');
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('tab-active'));
+            document.getElementById('btn-' + t).classList.add('tab-active');
+        }
+
+        render();
     </script>
 </body>
 </html>
