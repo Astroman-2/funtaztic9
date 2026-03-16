@@ -1,32 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Welcome to the Funtaztic9 blog, your go-to source for raga-themed content.">
-    <meta name="keywords" content="Blog, Raga, Music, Arts">
-    <meta name="author" content="Astroman-2">
-    <title>Welcome to Funtaztic9</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset='UTF-8'>
+    <title>FUNTAZTIC 9 | Arcade</title>
+    <script src='https://cdn.tailwindcss.com'></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;900&display=swap');
+        body { background: #050505; color: #fff; font-family: 'Inter', sans-serif; }
+        .gold { color: #d4af37; }
+        .card { background: #0a0a0a; border: 1px solid #1a1a1a; transition: all 0.3s ease; }
+        .card:hover { border-color: #d4af37; transform: translateY(-5px); }
+    </style>
 </head>
-<body>
-    <header>
-        <h1>Welcome to Funtaztic9</h1>
-        <p>Your one-stop destination for exploring the world of Raga and music.</p>
+<body class='p-10'>
+    <header class='mb-20 text-center'>
+        <h1 class='text-6xl font-black gold mb-2' style='font-family: "Playfair Display";'>FUNTAZTIC 9</h1>
+        <p class='uppercase tracking-[0.5em] text-xs opacity-40'>Collective Digital Resonance</p>
     </header>
-    <main>
-        <section>
-            <h2>Blog Index</h2>
-            <ul>
-                <li><a href="raga1.html">Raga 1 Description</a></li>
-                <li><a href="raga2.html">Raga 2 Description</a></li>
-                <li><a href="raga3.html">Raga 3 Description</a></li>
-                <!-- Additional raga links can be added here -->
-            </ul>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2026 Funtaztic9 by Astroman-2. All rights reserved.</p>
-    </footer>
+
+    <div class='grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto'>
+        
+        <a href='slingshot.html' class='card p-8 group'>
+            <div class='text-[10px] gold mb-4 tracking-widest uppercase'>Multiplayer Physics</div>
+            <h2 class='text-2xl font-bold mb-2'>SLINGSHOT RESONANCE</h2>
+            <p class='text-sm opacity-50'>De-glitch the artifact gallery with a friend using PeerJS.</p>
+        </a>
+
+        
+        <a href='vibe-racer.html' class='card p-8 group'>
+            <div class='text-[10px] gold mb-4 tracking-widest uppercase'>Racing</div>
+            <h2 class='text-2xl font-bold mb-2'>VIBE RACER</h2>
+            <p class='text-sm opacity-50'>High-speed technical racing on a procedural dark track.</p>
+        </a>
+
+        
+        <a href='neon-pong.html' class='card p-8 group'>
+            <div class='text-[10px] gold mb-4 tracking-widest uppercase'>Multiplayer P2P</div>
+            <h2 class='text-2xl font-bold mb-2'>NEON PONG</h2>
+            <p class='text-sm opacity-50'>Classic competitive pong over an encrypted P2P channel.</p>
+        </a>
+
+        
+        <a href='breakout.html' class='card p-8 group'>
+            <div class='text-[10px] gold mb-4 tracking-widest uppercase'>Arcade</div>
+            <h2 class='text-2xl font-bold mb-2'>ARTIFACT BREAKOUT</h2>
+            <p class='text-sm opacity-50'>Dismantle the grid using Matter.js physics.</p>
+        </a>
+
+        
+        <a href='gravity.html' class='card p-8 group'>
+            <div class='text-[10px] gold mb-4 tracking-widest uppercase'>Experimental</div>
+            <h2 class='text-2xl font-bold mb-2'>GRAVITY GRID</h2>
+            <p class='text-sm opacity-50'>Manipulate gravitational fields to align blocks.</p>
+        </a>
+    </div>
 </body>
 </html>
