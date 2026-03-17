@@ -12,7 +12,7 @@ jobs:
       - uses: actions/checkout@v3
       - name: Generate Page
         run: |
-          WORD=$(curl -s https://random-word-api.herokuapp.com/word)
+          WORD=$(curl -s https://api.apiverve.com/v1/randomwords)
           CATEGORY=$(echo "blogs photos quotes" | tr ' ' '\n' | shuf -n 1)
           FILE_PATH="$CATEGORY/$WORD.html"
           IMAGE_URL="https://source.unsplash.com/featured/?$WORD"
